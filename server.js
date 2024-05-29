@@ -2,6 +2,7 @@ const express=require('express')
 const app=express();
 const db=require('./db')
 require('dotenv').config();
+const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 
 
@@ -11,7 +12,8 @@ const log=(req,resp,next)=>{
     next();
 }
 app.use(log);
-//To communicate with json Data we have to use jsonParser
+app.use(cors());
+//To communicate with json Data we are using jsonParser
 app.use(express.json());
 
 app.get('/welcome',(req,resp)=>{
