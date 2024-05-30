@@ -5,6 +5,7 @@ require('dotenv').config();
 const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 const authRoutes=require('./routes/authRoutes')
+const errorMiddleWare=require('./middleware/errorMiddleware')
 
 
 const log=(req,resp,next)=>{
@@ -24,6 +25,9 @@ app.get('/welcome',(req,resp)=>{
 app.use('/api/v1/test',testRoutes);
 //Auth Routes
 app.use('/api/v1/auth',authRoutes);
+
+//Adding MiddleWare
+app.use(errorMiddleWare);
 
 const port=process.env.PORT || 8000
 app.listen(port,()=>{

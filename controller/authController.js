@@ -1,21 +1,18 @@
 const User=require('./../models/userModel')
+const {body,validationResult}=require('express-validator')
 
-const registerController=async(req,resp)=>{
+const registerController=async(req,resp,next)=>{
     try{
+        //If there are any errors occur for validations
+        const err=validationResult(req);
+        if(!err.isEmpty()){
+            resp.json(err).status(400);
+        } 
+        
         const {name,email,password}=req.body;
-        if(!name){
-            return resp.json("Name is Required!");
-        }
-        if(!email){
-            return resp.json("Email is Required!");
-        }
-        if(!password){
-            return resp.json("password is Required!");
-        }
-
         const existingUser=await User.findOne({email: email});
         if(existingUser){
-            return resp.json("User already is registerd!");
+            return resp.status(401).json("User already is registerd!");
         }
 
         const user=new User({name,email,password});
@@ -27,12 +24,7 @@ const registerController=async(req,resp)=>{
             savedUser
         });
     }catch(err){
-        console.log(err);
-        resp.status(500).json({
-            msg: "Error in registerController",
-            success: false,
-            err
-        });
+        next(err);
     }
 }
 
