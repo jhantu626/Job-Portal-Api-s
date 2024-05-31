@@ -7,7 +7,7 @@ const {body,validationResult}=require('express-validator')
 
 //ResigerUser
 router.post('/register',[
-    body('name').isLength({min: 3,max:30}),
+    body('name','Name must be 3 or More character!').isLength({min: 3,max:30}),
     body('email','Email Should Be in Email Format').isEmail(),
     body('password','Password Must atlest 6 Character!')
     .isLength({min: 6,max: 15})

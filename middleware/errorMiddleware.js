@@ -1,11 +1,10 @@
 //Error Middleware || NEXT Function
 const errorMiddleWare=(err,req,resp,next)=>{
     console.log(err);
-    resp.status(500)
+    resp.status(err.statusCode)
     .json({
         success: false,
-        msg: "Something went wrong",
-        err
+        msg: err.message
     });
 }
 

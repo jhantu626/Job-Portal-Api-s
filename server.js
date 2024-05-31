@@ -6,7 +6,7 @@ const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 const authRoutes=require('./routes/authRoutes')
 const errorMiddleWare=require('./middleware/errorMiddleware')
-
+require('express-async-errors')
 
 const log=(req,resp,next)=>{
     const date=new Date().toLocaleString();
