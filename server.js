@@ -5,6 +5,7 @@ require('dotenv').config();
 const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 const authRoutes=require('./routes/authRoutes')
+const userRoutes=require('./routes/UserRoutes')
 const errorMiddleWare=require('./middleware/errorMiddleware')
 require('express-async-errors')
 
@@ -23,9 +24,10 @@ app.get('/welcome',(req,resp)=>{
     resp.send('welcome to our Job Portal!');
 })
 
+//All the routes
 app.use('/api/v1/test',testRoutes);
-//Auth Routes
 app.use('/api/v1/auth',authRoutes);
+app.use('/api/v1/user',userRoutes)
 
 //Adding MiddleWare
 app.use(errorMiddleWare);
