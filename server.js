@@ -8,6 +8,7 @@ const authRoutes=require('./routes/authRoutes')
 const errorMiddleWare=require('./middleware/errorMiddleware')
 require('express-async-errors')
 
+
 const log=(req,resp,next)=>{
     const date=new Date().toLocaleString();
     console.log(`[${date}] {${req.method}} (${req.url})`);

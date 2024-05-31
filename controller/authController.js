@@ -1,5 +1,6 @@
 const User=require('./../models/userModel')
 const {body,validationResult}=require('express-validator')
+const {genToken}=require('./../middleware/jwt')
 
 const registerController=async(req,resp,next)=>{
     try{
@@ -24,14 +25,51 @@ const registerController=async(req,resp,next)=>{
         const savedUser=await user.save();
         savedUser.password=undefined
         console.log(savedUser);
+        const payload={
+            id: savedUser.id
+        }
+        const token=genToken(payload);
         resp.status(201).json({
             success: true,
-            msg: "User created successfully!",
-            savedUser
+            token: token
         });
     }catch(err){
         next(err);
     }
 }
 
-module.exports={registerController}
+
+const loginController=async(req,resp,next)=>{
+    try{
+        const err=validationResult(req);
+        if(!err.isEmpty()){
+            const errorMessage = err.array()[0].msg; // Get the first error message
+            const error=new Error(errorMessage);
+            error.statusCode=400;
+            throw error; 
+        }
+        
+        const {email,password}=req.body;
+        const user=await User.findOne({email: email});
+        if(!user){
+            const error=new Error("User does not exist!");
+            error.statusCode=404;
+            throw error;
+        }
+        const isPasswordMatch=await user.comparePassword(password);
+        if(!isPasswordMatch){
+            const error=new Error("Unauthorized user!");
+            error.statusCode=401;
+            throw error;
+        }
+
+        const payload={
+            id: user.id
+        }
+        const token=genToken(payload);
+        resp.status(200).json(token);
+    }catch(error){
+        next(error)
+    }
+}
+module.exports={registerController,loginController}
