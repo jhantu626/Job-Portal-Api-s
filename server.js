@@ -6,8 +6,10 @@ const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 const authRoutes=require('./routes/authRoutes')
 const userRoutes=require('./routes/UserRoutes')
+const jobRoutes=require('./routes/JobsRoutes.js')
 const errorMiddleWare=require('./middleware/errorMiddleware')
 require('express-async-errors')
+
 
 
 const log=(req,resp,next)=>{
@@ -28,6 +30,7 @@ app.get('/welcome',(req,resp)=>{
 app.use('/api/v1/test',testRoutes);
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/user',userRoutes)
+app.use('/api/v1/job',jobRoutes)
 
 //Adding MiddleWare
 app.use(errorMiddleWare);
