@@ -5,9 +5,7 @@ const {createJob,getAllJobs,getAllJobsById}=require('./../controller/JobsControl
 
 //Create Jobs
 router.post('/create',jwtMiddleWare,createJob)
-router.get('/get',jwtMiddleWare,getAllJobs){
-    
-}
+router.get('/get',jwtMiddleWare,getAllJobs);
 router.get('/get-jobs',jwtMiddleWare,getAllJobsById)
 
 

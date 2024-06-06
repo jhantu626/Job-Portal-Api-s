@@ -1,4 +1,5 @@
 const Job=require('./../models/JobModel')
+const mongoose=require('mongoose')
 
 //Create Jobs || POST
 const createJob=async(req,resp,next)=>{
@@ -41,5 +42,10 @@ const getAllJobsById=async(req,resp,next)=>{
         next(err);
     }
 }
+
+
+
+
+
 
 module.exports={createJob,getAllJobsById,getAllJobs}

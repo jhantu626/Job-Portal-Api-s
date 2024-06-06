@@ -6,7 +6,7 @@ const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 const authRoutes=require('./routes/authRoutes')
 const userRoutes=require('./routes/UserRoutes')
-const jobRoutes=require('./routes/JobsRoutes.js')
+const jobRoutes=require('./routes/JobsRoutes')
 const errorMiddleWare=require('./middleware/errorMiddleware')
 require('express-async-errors')
 
