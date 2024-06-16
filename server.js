@@ -9,6 +9,10 @@ const userRoutes=require('./routes/UserRoutes')
 const jobRoutes=require('./routes/JobsRoutes')
 const errorMiddleWare=require('./middleware/errorMiddleware')
 require('express-async-errors')
+//Security Packages
+const helmet=require('helmet')
+const xss=require('xss-clean')
+const mongoSanitize=require('express-mongo-sanitize')
 
 
 
@@ -19,6 +23,9 @@ const log=(req,resp,next)=>{
 }
 app.use(log);
 app.use(cors());
+app.use(helmet())
+app.use(xss())
+app.use(mongoSanitize())
 //To communicate with json Data we are using jsonParser
 app.use(express.json());
 
