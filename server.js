@@ -5,6 +5,15 @@ require('dotenv').config();
 const cors=require('cors');
 const testRoutes=require('./routes/testRoutes')
 const authRoutes=require('./routes/authRoutes')
+const userRoutes=require('./routes/UserRoutes')
+const jobRoutes=require('./routes/JobsRoutes')
+const errorMiddleWare=require('./middleware/errorMiddleware')
+require('express-async-errors')
+//Security Packages
+const helmet=require('helmet')
+const xss=require('xss-clean')
+const mongoSanitize=require('express-mongo-sanitize')
+
 
 
 const log=(req,resp,next)=>{
@@ -14,6 +23,9 @@ const log=(req,resp,next)=>{
 }
 app.use(log);
 app.use(cors());
+app.use(helmet())
+app.use(xss())
+app.use(mongoSanitize())
 //To communicate with json Data we are using jsonParser
 app.use(express.json());
 
@@ -21,9 +33,14 @@ app.get('/welcome',(req,resp)=>{
     resp.send('welcome to our Job Portal!');
 })
 
+//All the routes
 app.use('/api/v1/test',testRoutes);
-//Auth Routes
 app.use('/api/v1/auth',authRoutes);
+app.use('/api/v1/user',userRoutes)
+app.use('/api/v1/job',jobRoutes)
+
+//Adding MiddleWare
+app.use(errorMiddleWare);
 
 const port=process.env.PORT || 8000
 app.listen(port,()=>{
